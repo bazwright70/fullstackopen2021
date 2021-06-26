@@ -8,16 +8,22 @@ const Statistics = (props) => {
   const total = good + bad + neutral;
   const avg = good - bad;
 
-  return (
-    <div>
-      <Display value={good} label="good" />
-      <Display value={neutral} label="neutral" />
-      <Display value={bad} label="bad" />
-      <Display value={total} label="all" />
-      <Display value={avg / total || 0} label="average" />
-      <Display value={(good / total * 100) || 0} suffix="%" label="positive" />
-    </div>
-  )
+  if (total) {
+    return (
+      <div>
+        <Display value={good} label="good" />
+        <Display value={neutral} label="neutral" />
+        <Display value={bad} label="bad" />
+        <Display value={total} label="all" />
+        <Display value={avg / total || 0} label="average" />
+        <Display value={(good / total * 100) || 0} suffix="%" label="positive" />
+      </div>
+    )
+  } else {
+    return (
+      <p>No feedback given</p>
+    )
+  }
 }
 
 export default Statistics;

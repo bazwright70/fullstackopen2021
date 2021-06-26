@@ -20,7 +20,7 @@ function App() {
     setbad(bad + 1)
   }
 
-  const stats = [good, bad, neutral]
+  const stats = [good, bad, neutral];
 
   return (
     <div>
