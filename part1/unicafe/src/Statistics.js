@@ -1,5 +1,5 @@
 import React from 'react';
-import Display from './Display';
+import Statistic from './Statistic';
 
 const Statistics = (props) => {
 
@@ -11,12 +11,12 @@ const Statistics = (props) => {
   if (total) {
     return (
       <div>
-        <Display value={good} label="good" />
-        <Display value={neutral} label="neutral" />
-        <Display value={bad} label="bad" />
-        <Display value={total} label="all" />
-        <Display value={avg / total || 0} label="average" />
-        <Display value={(good / total * 100) || 0} suffix="%" label="positive" />
+        <Statistic value={good} label="good" />
+        <Statistic value={neutral} label="neutral" />
+        <Statistic value={bad} label="bad" />
+        <Statistic value={total} label="all" />
+        <Statistic value={avg / total || 0} label="average" />
+        <Statistic value={(good / total * 100) || 0} suffix="%" label="positive" />
       </div>
     )
   } else {
