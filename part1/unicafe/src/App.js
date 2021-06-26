@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from './Button';
-import Display from './Display'
+import Statistics from './Statistics'
 
 function App() {
 
@@ -20,8 +20,7 @@ function App() {
     setbad(bad + 1)
   }
 
-  const total = good + bad + neutral;
-  const avg = good - bad
+  const stats = [good, bad, neutral]
 
   return (
     <div>
@@ -32,13 +31,9 @@ function App() {
       <Button handler={incBad} text="Bad" />
       <br />
       <p>Statistics</p>
+      <Statistics stats={stats} />
       <br />
-      <Display value={good} label="good" />
-      <Display value={neutral} label="neutral" />
-      <Display value={bad} label="bad" />
-      <Display value={total} label="all" />
-      <Display value={avg / total || 0} label="average" />
-      <Display value={(good / total * 100) || 0} suffix="%" label="positive" />
+
     </div>
   );
 }
