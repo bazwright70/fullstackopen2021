@@ -5,19 +5,34 @@ const Statistics = (props) => {
 
   const [good, bad, neutral] = props.stats;
 
-  const total = good + bad + neutral;
-  const avg = good - bad;
+  const total = (good + bad + neutral);
+  const avg = ((good - bad) / total).toFixed(1);
+  const percent = (good / total * 100).toFixed(1);
 
   if (total) {
     return (
-      <div>
-        <Statistic value={good} label="good" />
-        <Statistic value={neutral} label="neutral" />
-        <Statistic value={bad} label="bad" />
-        <Statistic value={total} label="all" />
-        <Statistic value={avg / total || 0} label="average" />
-        <Statistic value={(good / total * 100) || 0} suffix="%" label="positive" />
-      </div>
+      <table>
+        <tbody >
+          <tr>
+            <td>Good </td><Statistic value={good} />
+          </tr>
+          <tr>
+            <td>Neutral </td><Statistic value={neutral} />
+          </tr>
+          <tr>
+            <td>Bad </td><Statistic value={bad} />
+          </tr>
+          <tr>
+            <td>Total </td><Statistic value={total} />
+          </tr>
+          <tr>
+            <td>Average </td><Statistic value={avg || 0} />
+          </tr>
+          <tr>
+            <td>Positive</td><Statistic value={percent || 0} suffix="%" />
+          </tr>
+        </tbody>
+      </table>
     )
   } else {
     return (
