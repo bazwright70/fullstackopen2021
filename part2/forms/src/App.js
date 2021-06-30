@@ -5,6 +5,7 @@ const App = (props) => {
 
   const [notes, setNotes] = useState(props.notes)
   const [newNote, setNewNote] = useState('');
+  const [showAll, setShowAll] = useState(true);
 
   const addNote = (event) => {
     event.preventDefault();
@@ -27,11 +28,18 @@ const App = (props) => {
     setNewNote(event.target.value);
   }
 
+  const notesToShow = showAll ? notes : notes.filter(note => note.important)
+
   return (
     <div>
       <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          Show {showAll ? "Important" : "All"}
+        </button>
+      </div>
       <ul>
-        {notes.map((note) => {
+        {notesToShow.map((note) => {
           return <Note key={note.id} note={note.content} />
         })}
       </ul>
