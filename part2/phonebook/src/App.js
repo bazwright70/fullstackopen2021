@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Display from './Display.js';
 
 const App = () => {
 
@@ -98,17 +99,8 @@ const App = () => {
       </form>
 
       <h2>Numbers</h2>
-      {
-        person.
-          filter((obj) => {
-            return filterValue === ''
-              || obj.name.toLowerCase().includes(filterValue.toLowerCase());
-          }).
-          map((obj) => {
-            console.log("Object", obj.name);
-            return <p key={obj.name} >{obj.name} {obj.number}</p>
-          })
-      }
+      <Display person={person} filterValue={filterValue} />
+
     </div>
   );
 }
