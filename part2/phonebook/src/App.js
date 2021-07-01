@@ -3,8 +3,25 @@ import React, { useState } from 'react';
 const App = () => {
 
   const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('')
   const [person, setPerson] = useState(
-    [{ name: 'Arto Hellas' }]);
+    [{
+      name: 'Arto Hellas',
+      number: '08450-563251'
+    },
+    {
+      name: 'Baz Wright',
+      number: '0795699637'
+    },
+    {
+      name: 'Jim Smith',
+      number: '01254856258'
+    },
+    {
+      name: 'Abby Normal',
+      number: '02335695569'
+    }
+    ]);
 
   // handle form submit event
   const handleSubmit = (event) => {
@@ -12,23 +29,37 @@ const App = () => {
 
     // check if entry already in phonebook
     for (let entry of person) {
-      if (entry.name.toLowerCase().indexOf(newName.toLowerCase()) === 0) {
+      if (entry.name.toLowerCase() === newName.toLowerCase()) {
         setNewName('');
+        setNewNumber('');
         return alert(`${newName} already exists in phonebook`)
+      } else if (newName.length < 3) {
+        setNewName('');
+        setNewNumber('');
+        return alert('Name too short');
       }
     }
 
     // create new entry object
-
+    const newPerson = {
+      name: newName,
+      number: newNumber
+    }
     // add entry to phonebook
-    setPerson(person.concat({ name: newName }));
+    setPerson(person.concat(newPerson));
     setNewName('');
+    setNewNumber('');
 
   }
 
   // handle name input field update or change
   const updateName = (event) => {
     setNewName(event.target.value);
+  }
+
+  // handle number input field
+  const updateNumber = (event) => {
+    setNewNumber(event.target.value)
   }
 
   return (
@@ -42,6 +73,12 @@ const App = () => {
           />
         </div>
         <div>
+          Number: <input
+            value={newNumber}
+            onChange={updateNumber}
+          />
+        </div>
+        <div>
           <button type="submit">add</button>
         </div>
       </form>
@@ -49,7 +86,7 @@ const App = () => {
       <h2>Numbers</h2>
       {
         person.map((obj) => {
-          return <p key={obj.name} >{obj.name}</p>
+          return <p key={obj.name} >{obj.name} {obj.number}</p>
         })
       }
     </div>
