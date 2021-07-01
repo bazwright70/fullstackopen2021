@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Display from './Display.js';
+import FilterName from './FilterName.js';
 
 const App = () => {
 
@@ -71,12 +72,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        Filter shown with <input
-          value={filterValue}
-          onChange={handleFilter}
-        />
-      </div>
+
+      <FilterName
+        value={filterValue}
+        handler={handleFilter}
+      />
 
       <h2> Add New </h2>
 

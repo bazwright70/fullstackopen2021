@@ -1,10 +1,13 @@
 import React from 'react';
 
-const FilterName = (props) => {
-  console.log(props);
+const FilterName = ({ value, handler }) => {
+  console.log("Value: ", value, "Handler", handler);
   return (
     <div>
-      Show names with <input />
+      Show names with <input
+        value={value}
+        onChange={handler}
+      />
     </div>
   )
 }
