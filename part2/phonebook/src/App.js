@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const App = () => {
 
+  const [filterValue, setFilterValue] = useState('');
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('')
   const [person, setPerson] = useState(
@@ -62,9 +63,22 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  // handle change in filter input text and update
+  const handleFilter = (event) => {
+    setFilterValue(event.target.value)
+  }
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        Filter shown with <input
+          value={filterValue}
+          onChange={handleFilter}
+        />
+      </div>
+
+      <h2> Add New </h2>
+
       <form onSubmit={handleSubmit}>
         <div>
           name: <input
@@ -82,12 +96,18 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      <div>debug: {newName}</div>
+
       <h2>Numbers</h2>
       {
-        person.map((obj) => {
-          return <p key={obj.name} >{obj.name} {obj.number}</p>
-        })
+        person.
+          filter((obj) => {
+            return filterValue === ''
+              || obj.name.toLowerCase().includes(filterValue.toLowerCase());
+          }).
+          map((obj) => {
+            console.log("Object", obj.name);
+            return <p key={obj.name} >{obj.name} {obj.number}</p>
+          })
       }
     </div>
   );
