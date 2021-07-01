@@ -3,17 +3,26 @@ import React, { useState } from 'react';
 const App = () => {
 
   const [person, setPerson] = useState([
-    { name: 'Arto Hellas' }
+    {
+      name: 'Arto Hellas',
+      id: 1
+    }
   ]);
   const [newName, setNewName] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const addPerson = {
+      name: newName,
+      id: person.length + 1
+    }
+    setPerson(person.concat(addPerson));
+    setNewName('');
 
   }
 
   const updateName = (event) => {
-    setNewName(event.target.value)
+    setNewName(event.target.value);
   }
 
   return (
@@ -32,6 +41,11 @@ const App = () => {
       </form>
       <div>debug: {newName}</div>
       <h2>Numbers</h2>
+      {
+        person.map((obj, idx) => {
+          return <p key={obj.id} >{obj.name}</p>
+        })
+      }
     </div>
   );
 }
