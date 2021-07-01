@@ -74,22 +74,13 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <FilterName
-        value={filterValue}
-        handler={handleFilter}
-      />
-      <hr />
+      <FilterName value={filterValue} handler={handleFilter} /><hr />
 
       <h2> Add New </h2>
 
-      <AddNew
-        newName={newName}
-        newNumber={newNumber}
-        handleSubmit={handleSubmit}
-        handleName={updateName}
-        handleNumber={updateNumber}
-      />
-      <hr />
+      <AddNew newName={newName} newNumber={newNumber}
+        handleSubmit={handleSubmit} handleName={updateName}
+        handleNumber={updateNumber} /><hr />
 
       <h2>Numbers</h2>
 
