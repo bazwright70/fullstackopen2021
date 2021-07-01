@@ -78,6 +78,7 @@ const App = () => {
         value={filterValue}
         handler={handleFilter}
       />
+      <hr />
 
       <h2> Add New </h2>
 
@@ -86,7 +87,9 @@ const App = () => {
         newNumber={newNumber}
         handleSubmit={handleSubmit}
         handleName={updateName}
-        handleNumber={updateNumber} />
+        handleNumber={updateNumber}
+      />
+      <hr />
 
       <h2>Numbers</h2>
 

@@ -10,12 +10,14 @@ const AddNew = (props) => {
           onChange={props.handleName}
         />
       </div>
+      <br />
       <div>
         Number: <input
           value={props.newNumber}
           onChange={props.handleNumber}
         />
       </div>
+      <br />
       <div>
         <button type="submit">add</button>
       </div>
