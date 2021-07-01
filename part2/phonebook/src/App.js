@@ -12,9 +12,17 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const addPerson = {
       name: newName,
       id: person.length + 1
+    }
+    for (let entry of person) {
+      console.log(entry.name)
+      if (entry.name.toLowerCase().indexOf(addPerson.name.toLowerCase()) === 0) {
+        setNewName('')
+        return alert(`${entry.name} already exists in phonebook`)
+      }
     }
     setPerson(person.concat(addPerson));
     setNewName('');
