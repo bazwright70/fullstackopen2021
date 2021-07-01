@@ -2,33 +2,31 @@ import React, { useState } from 'react';
 
 const App = () => {
 
-  const [person, setPerson] = useState([
-    {
-      name: 'Arto Hellas',
-      id: 1
-    }
-  ]);
   const [newName, setNewName] = useState('');
+  const [person, setPerson] = useState(
+    [{ name: 'Arto Hellas' }]);
 
+  // handle form submit event
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const addPerson = {
-      name: newName,
-      id: person.length + 1
-    }
+    // check if entry already in phonebook
     for (let entry of person) {
-      console.log(entry.name)
-      if (entry.name.toLowerCase().indexOf(addPerson.name.toLowerCase()) === 0) {
-        setNewName('')
-        return alert(`${entry.name} already exists in phonebook`)
+      if (entry.name.toLowerCase().indexOf(newName.toLowerCase()) === 0) {
+        setNewName('');
+        return alert(`${newName} already exists in phonebook`)
       }
     }
-    setPerson(person.concat(addPerson));
+
+    // create new entry object
+
+    // add entry to phonebook
+    setPerson(person.concat({ name: newName }));
     setNewName('');
 
   }
 
+  // handle name input field update or change
   const updateName = (event) => {
     setNewName(event.target.value);
   }
@@ -50,8 +48,8 @@ const App = () => {
       <div>debug: {newName}</div>
       <h2>Numbers</h2>
       {
-        person.map((obj, idx) => {
-          return <p key={obj.id} >{obj.name}</p>
+        person.map((obj) => {
+          return <p key={obj.name} >{obj.name}</p>
         })
       }
     </div>
