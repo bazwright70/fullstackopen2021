@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Display from './Display.js';
 import FilterName from './FilterName.js';
+import AddNew from './AddNew.js'
 
 const App = () => {
 
@@ -80,25 +81,15 @@ const App = () => {
 
       <h2> Add New </h2>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input
-            value={newName}
-            onChange={updateName}
-          />
-        </div>
-        <div>
-          Number: <input
-            value={newNumber}
-            onChange={updateNumber}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <AddNew
+        newName={newName}
+        newNumber={newNumber}
+        handleSubmit={handleSubmit}
+        handleName={updateName}
+        handleNumber={updateNumber} />
 
       <h2>Numbers</h2>
+
       <Display person={person} filterValue={filterValue} />
 
     </div>

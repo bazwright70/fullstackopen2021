@@ -1,19 +1,19 @@
 import React from 'react';
 
-const AddNew = ({ values, handlers }) => {
-  console.log(handlers);
+const AddNew = (props) => {
+  console.log(props);
   return (
-    <form onSubmit={handlers.handleSubmit}>
+    <form onSubmit={props.handleSubmit}>
       <div>
         name: <input
-          value={values.newName}
-          onChange={handlers.updateName}
+          value={props.newName}
+          onChange={props.handleName}
         />
       </div>
       <div>
         Number: <input
-          value={values.newNumber}
-          onChange={handlers.updateNumber}
+          value={props.newNumber}
+          onChange={props.handleNumber}
         />
       </div>
       <div>
