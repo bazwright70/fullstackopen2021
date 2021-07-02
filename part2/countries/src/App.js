@@ -1,48 +1,61 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
+const App = () => {
 
-const App = ({ dataset }) => {
+  const [ allData, setAllData] = useState([]);
+  const [ filter, setFilter ] = useState('');
 
-const [filter, setFilter] = useState('');
-const [data, setData] = useState([]);
+  const getData = () => {
+    axios.get('https://restcountries.eu/rest/v2/all')
+      .then( res => setAllData(res.data))
+  }
 
-const setInput = (event) =>{
-  const output = event.target.value;
-  setFilter(output);
-}
+  useEffect(getData,[])
 
-console.log(dataset)
+  const updateInput = (e) =>{
+    setFilter(e.target.value)
+  }
 
-const getData = () =>{
-  axios.get('https://restcountries.eu/rest/v2/lang/es')
-    .then( res => setData(res.data));
-}
+  const getFiltered = () => {
+    return allData.filter(cty =>cty.name.toLowerCase().includes(filter.toLowerCase()))
+  }
 
-useEffect(getData,[]);
+  const results = () => {
+    const data = getFiltered();
+    if(data.length > 10){
+      return(<p>Too many results</p>)
+    }else if(data.length > 1 && data.length < 11){
+      return(
+        data.map(cty => <li key={cty.alpha3Code}>{cty.name}</li>)
+      )
+    }else if(data.length === 1){
+      return(
+        <div>
+          <h3>{data[0].name}</h3>
+          <p>Capital: {data[0].capital}</p>
+          <p>Population: {data[0].population}</p>
+          <h4>Languages</h4>
+          <ul>
+            {data[0].languages.map(lang => <li key={lang.iso639_2}>{lang.name}</li>)}
+          </ul>
+          <br/>
+            <img alt="flag" src={data[0].flag} width="100" height="100"/>         
+        </div>
+        )
+    }
+  }
 
-const search = (searchFilter) =>{
-  const filteredData = data.filter(country => country.name.toLowerCase().includes(searchFilter.toLowerCase()));
-  return filteredData.length > 10 ?
-            "Too many countries, specify a better filter." :
-            filteredData.map(country => {
-              return <p>{country.name}</p>
-            })
-}
-
-  return (
+  return(
     <div>
-      <p>Filter</p>
-      <input 
-        type='text'
-        placeholder="filter countries"
-        onChange={setInput}
-        value={filter}/>
-      <div>
-       { search(filter) }     
-      </div>
+      <label>Find Countries</label>
+      <input type='text' value={filter} onChange={updateInput} />
+      <ul>
+        {results()}
+      </ul>
     </div>
-  );
+  )
+
 }
 
 export default App;
