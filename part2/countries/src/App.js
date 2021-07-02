@@ -21,28 +21,37 @@ const App = () => {
     return allData.filter(cty =>cty.name.toLowerCase().includes(filter.toLowerCase()))
   }
 
+  const showCountry = (countryObj) =>{
+    return (
+      <div>
+      <h3>{countryObj.name}</h3>
+      <p>Capital: {countryObj.capital}</p>
+      <p>Population: {countryObj.population}</p>
+      <h4>Languages</h4>
+      <ul>
+        {countryObj.languages.map(lang => <li key={lang.iso639_2}>{lang.name}</li>)}
+      </ul>
+      <br/>
+        <img alt="flag" src={countryObj.flag} width="100" height="100"/>         
+    </div>
+    )
+  }
+
   const results = () => {
     const data = getFiltered();
     if(data.length > 10){
       return(<p>Too many results</p>)
     }else if(data.length > 1 && data.length < 11){
       return(
-        data.map(cty => <li key={cty.alpha3Code}>{cty.name}</li>)
+        data.map(cty => <li key={cty.alpha3Code}>{cty.name} 
+        <button onClick={()=>setFilter(cty.name)}>Show</button></li>)
       )
     }else if(data.length === 1){
       return(
         <div>
-          <h3>{data[0].name}</h3>
-          <p>Capital: {data[0].capital}</p>
-          <p>Population: {data[0].population}</p>
-          <h4>Languages</h4>
-          <ul>
-            {data[0].languages.map(lang => <li key={lang.iso639_2}>{lang.name}</li>)}
-          </ul>
-          <br/>
-            <img alt="flag" src={data[0].flag} width="100" height="100"/>         
+          {showCountry(data[0])}
         </div>
-        )
+      )
     }
   }
 
