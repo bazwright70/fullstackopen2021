@@ -6,12 +6,14 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   const [filter, setFilter] = useState('');
   
+  // On first render get country data
   useEffect(()=>{
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then( res => setCountries(res.data))
   }, [])
 
+  // get countries based on filter value
   const filteredData = countries.filter( country => (
     country.name.toLowerCase().includes(filter.toLowerCase())
   ));
