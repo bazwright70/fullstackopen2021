@@ -1,87 +1,66 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import Weather from './Weather';
 
 const App = () => { 
 
   const [countries, setCountries] = useState([]);
   const [filter, setFilter] = useState('');
-  const [temp, setTemp] = useState(0);
-  const [wind, setWind] = useState(0);
-  const [windDir, setWindDir ] = useState(0);
-  const [icon, setIcon] = useState("");
+
   
-  // On first render get country data
+ 
+
+  // get country data
   useEffect(()=>{
     axios
       .get('https://restcountries.eu/rest/v2/all')
-      .then( res => setCountries(res.data))
-  }, [])
-
-  const getWeather = (country) => {
-    const key = '00ad4285847a7c5d5d377194f4958e71';
-    axios
-      .get('https://api.openweathermap.org/data/2.5/weather?q=' + country.capital + '&appid=' + key + '')
-      .then( response =>{
-        const tempC = (response.data.main.temp-273.15).toPrecision(3);
-        const windSpeed = response.data.wind.speed;
-        const windDeg = response.data.wind.deg;
-        const weatherIcon = response.data.weather[0].icon
-        setTemp(tempC)
-        setWind(windSpeed)
-        setWindDir(windDeg)
-        setIcon(weatherIcon)
+      .then( res => {
+        setCountries(res.data);
       })
-  }
+  },[])
 
-  // get countries based on filter value
-  const filteredData = countries.filter( country => (
-    country.name.toLowerCase().includes(filter.toLowerCase())
-  ));
+  // Result component
+  const Result = () =>{
 
-  // function to display single country
-  const displayCountry = (country) => {
-    const srcString = `http://openweathermap.org/img/wn/${icon}@2x.png`
-    getWeather(country)
-    return (
-      <div>
-        <h2>{country.name}</h2>
-        <p>Capital City: {country.capital}</p>
-        <p>Population: {country.population}</p>
-        <h3>Languages</h3>
-        <ul>
-          {
-          country.languages.map(lang => (
-            <li key={lang.name}>{lang.name}</li>
-          ))
-          }
-        </ul> 
-        <img src={country.flag} alt="countrys flag" width="100" /> 
-        <h3>Weather in {country.name}</h3>
-        <p>temperature: {temp} Celcius</p>
-        <img src={srcString} alt="weather icon"/>
-        <p>Wind: {wind} MPH direction {windDir} degrees</p>
-      </div>      
-    )
-  }
 
-  // conditional display for countries filter
-  const Result = () => {
-    // check if number of countries > 10 ? return error string
-    if(filteredData.length > 10){
-      return <p>Too many countries, choose a better filter</p>
+    const filteredArr = countries.filter(elem =>{
+      return elem.name.toLowerCase().includes(filter.toLowerCase())
+    })
+
+    // render diplay based on number of countries reruned
+    if(filteredArr.length > 10) {
+      return <p>Too many countries, try a better search</p>
     }
-    // check if only 1 country returned, display data for that country
-    if(filteredData.length === 1){
-      return displayCountry(filteredData[0])
-    }
-    // return list of all countries that match filter
-    return(
-      filteredData.map( country => (
-        <div key={country.alpha3Code}>{country.name}
-         <button onClick={() => setFilter(country.name)}>Show</button>
+
+    if(filteredArr.length === 1){
+      const displayCountry = filteredArr[0];
+      return(
+        <div>
+          <h2>{displayCountry.name}</h2>
+          <p>Capital City {displayCountry.capital}</p>
+          <p>Population: {displayCountry.population}</p>
+          <h3>languages</h3>
+          <ul>
+            {displayCountry.languages.map(elem =>{
+              return <li key={elem.iso639_2}>{elem.name}</li>
+            })}
+          </ul>
+          <img src={displayCountry.flag} alt="flag" width="20%"/>
+          <Weather country={displayCountry}/>
         </div>
-      ))
-    )
+      )
+    }
+
+      return ( <div>
+        <h4>Results</h4>
+        {
+          filteredArr.map( elem => (
+            <p key={elem.alpha3Code}>{elem.name}
+              <button onClick={()=> setFilter(elem.name)}>Show</button>
+            </p>
+          ))
+        }
+      </div> )
   }
 
   // returned App component
@@ -90,6 +69,7 @@ const App = () => {
       <label>Find Countries:</label>
       <input type='text' autoFocus value={filter} onChange={(e)=> setFilter(e.target.value)}/>
       <Result />
+      
     </div>
   )
 }
