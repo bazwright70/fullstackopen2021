@@ -1,7 +1,6 @@
 import React from 'react';
 
 const AddNew = (props) => {
-  console.log(props);
   return (
     <form onSubmit={props.handleSubmit}>
       <div>

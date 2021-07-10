@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Display from './Display.js';
 import FilterName from './FilterName.js';
 import AddNew from './AddNew.js'
-import axios from 'axios';
-const serverUrl = 'http://localhost:3001/persons'
+import server from './server/handlers.js'
 
 const App = () => {
 
@@ -13,8 +12,9 @@ const App = () => {
   const [person, setPerson] = useState([]);
 
   const loadData = () => {
-    axios.get(serverUrl)
-      .then(res => setPerson(res.data))
+    server.getAllContacts()
+      .then(contacts => setPerson(contacts))
+      .catch(err => console.log(err))
   }
 
   useEffect(loadData, [])
@@ -44,17 +44,14 @@ const App = () => {
     }
 
     // save new contact to server
-    axios.post(serverUrl, newPerson)
-      .then(response =>{
-        setPerson(person.concat(response.data))})
+    server.createContact(newPerson)
+      .then(newContact =>{
+        setPerson(person.concat(newContact))})
       .catch(err => console.log(err))
 
-
     // add entry to phonebook
-    setPerson(person.concat(newPerson));
     setNewName('');
     setNewNumber('');
-
   }
 
   // handle name input field update or change
