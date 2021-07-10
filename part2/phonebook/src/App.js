@@ -3,6 +3,7 @@ import Display from './Display.js';
 import FilterName from './FilterName.js';
 import AddNew from './AddNew.js'
 import axios from 'axios';
+const serverUrl = 'http://localhost:3001/persons'
 
 const App = () => {
 
@@ -12,7 +13,7 @@ const App = () => {
   const [person, setPerson] = useState([]);
 
   const loadData = () => {
-    axios.get('http://localhost:3001/persons')
+    axios.get(serverUrl)
       .then(res => setPerson(res.data))
   }
 
@@ -37,9 +38,18 @@ const App = () => {
 
     // create new entry object
     const newPerson = {
+      id: person.length + 1,
       name: newName,
       number: newNumber
     }
+
+    // save new contact to server
+    axios.post(serverUrl, newPerson)
+      .then(response =>{
+        setPerson(person.concat(response.data))})
+      .catch(err => console.log(err))
+
+
     // add entry to phonebook
     setPerson(person.concat(newPerson));
     setNewName('');
