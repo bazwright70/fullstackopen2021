@@ -18,10 +18,20 @@ const removeContact = (contact) => {
   return response.then( response => response.data)
 }
 
+const updateNumber = (contact) => {
+  const response = axios.put(`${serverUrl}/${contact.id}`,contact)
+  return response.then(response => {
+            console.log("Returned contact:", response.data);
+            return response.data
+        }
+          )
+} 
+
 const ServerFunctions = {
   getAllContacts,
   createContact,
-  removeContact
+  removeContact,
+  updateNumber
 }
 
 export default ServerFunctions;

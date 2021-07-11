@@ -22,21 +22,41 @@ const App = () => {
   // handle form submit event
   const handleSubmit = (event) => {
     event.preventDefault();
+    const duplicate = false;
 
-    // check if entry already in phonebook
+    // loop through person array for validations
     for (let entry of person) {
-      if (entry.name.toLowerCase() === newName.toLowerCase()) {
-        setNewName('');
-        setNewNumber('');
-        return alert(`${newName} already exists in phonebook`)
-      } else if (newName.length < 3) {
+      // check if name length is valid
+      if(newName.length < 3) {
         setNewName('');
         setNewNumber('');
         return alert('Name too short');
       }
-    }
 
+      // check if entry already in phonebook
+      if (entry.name.toLowerCase() === newName.toLowerCase()) {
+          const reply = window.confirm(`${entry.name} is already in the phonebook, 
+                      replace old number with the new one`);
+        // clear inputs if number update not required
+        if(!reply){
+          setNewName('');
+          setNewNumber('');
+          return 0;
+        }else{
+          entry.number = newNumber
+          server.updateNumber(entry)
+            .then(contact => {
+              console.log("number updated for", contact);
+              setNewName('');
+              setNewNumber('');
+            })
+            .catch(err => console.log(err));
+            return entry;
+        }
+    }
+  }
     // create new entry object
+    console.log("Creating new person in form submit")
     const newPerson = {
       id: person.length + 1,
       name: newName,
@@ -46,12 +66,16 @@ const App = () => {
     // save new contact to server
     server.createContact(newPerson)
       .then(newContact =>{
-        setPerson(person.concat(newContact))})
+        console.log("creating new contact in sever.createContact function")
+        setPerson(person.concat(newContact));
+        setNewName('');
+        setNewNumber('');
+      })
       .catch(err => console.log(err))
+    
 
-    setNewName('');
-    setNewNumber('');
-  }
+  } //** end of handle submit
+
 
   // handle name input field update or change
   const updateName = (event) => {
