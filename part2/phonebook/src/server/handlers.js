@@ -13,9 +13,15 @@ const createContact = (newContact) => {
   return response.then( response => response.data);
 }
 
+const removeContact = (contact) => {
+  const response = axios.delete(`${serverUrl}/${contact.id}`)
+  return response.then( response => response.data)
+}
+
 const ServerFunctions = {
   getAllContacts,
-  createContact
+  createContact,
+  removeContact
 }
 
 export default ServerFunctions;

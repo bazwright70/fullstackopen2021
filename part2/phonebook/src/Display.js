@@ -1,19 +1,21 @@
 import React from 'react';
 
-const Display = ({ person, filterValue }) => {
+const Display = ({ person, filterValue, removeContact }) => {
   return (
     <div>
-      Display goes here...
-      {
-        person
-          .filter((obj) => {
-            return obj.name.toLowerCase().includes(filterValue.toLowerCase());
+     {
+      person.filter((obj) => {
+          return obj.name.toLowerCase().includes(filterValue.toLowerCase());
           })
-          .map((obj) => {
-            return <p key={obj.name} >{obj.name} {obj.number}</p>
-          })
+            .map((obj) => ( 
+              <p key={obj.name} >{obj.name} {obj.number}
+                <button
+                  onClick={()=> removeContact(obj)}
+                >Delete </button>
+              </p>))
       }
     </div>
+     
   )
 }
 

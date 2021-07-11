@@ -49,7 +49,6 @@ const App = () => {
         setPerson(person.concat(newContact))})
       .catch(err => console.log(err))
 
-    // add entry to phonebook
     setNewName('');
     setNewNumber('');
   }
@@ -68,6 +67,24 @@ const App = () => {
   const handleFilter = (event) => {
     setFilterValue(event.target.value)
   }
+
+  // remove contact onclick handler for display button
+  const remove = (contact) => {
+    const reply = window.confirm(`Remove ${contact.name}?`);
+    if(!reply){
+      return;
+    }
+    server.removeContact(contact)
+      .then(() => {
+        const contacts = person.filter( elem =>{
+          return elem.id !== contact.id;
+          });
+          setPerson(contacts);
+      })
+      .catch(err => console.log(err));
+  }
+
+// ***  app component retruned *** //
   return (
     <div>
       <h2>Phonebook</h2>
@@ -82,7 +99,9 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Display person={person} filterValue={filterValue} />
+      <Display person={person} 
+              filterValue={filterValue}
+              removeContact={remove} />
 
     </div>
   );
