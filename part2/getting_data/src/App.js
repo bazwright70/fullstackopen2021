@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Note from './components/Note.js';
+import Notification from './components/Notification';
 import noteService  from './services/notes';
 
 const App = () => {
@@ -7,6 +8,7 @@ const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
 
 // useEffect to load all notes when newNote is updated
  useEffect(() => {
@@ -34,7 +36,7 @@ const App = () => {
       .then( returnedNote => {
       setNotes(notes.concat(returnedNote));
       })
-      .catch(err => console.log(err))
+      .catch(err => setErrorMessage(err.message))
       setNewNote('');
   }
 
@@ -46,9 +48,14 @@ const App = () => {
     noteService.update(id, changedNote)
       .then(returnedNote => {
         setNotes( notes.map(note => note.id !== id ? note : returnedNote))
-      }).catch(err => console.log(err))
+      }).catch(err => {
+        setErrorMessage(`"${changedNote.content}" was already removed from the server`);
+        setTimeout(()=> setErrorMessage(null)
+          ,5000)
+          setNotes(notes.filter(n => n.id !== id));
+      })
   }
-  
+  // Testing notification output
   // Returned App component 
   return (
     <div>
@@ -62,6 +69,7 @@ const App = () => {
         <button type="submit">Save</button>
       </form>
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       <ul>
         { notes.map( (note) =>(
           <Note key={note.id}
