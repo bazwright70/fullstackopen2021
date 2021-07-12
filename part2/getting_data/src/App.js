@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import Note from './components/Note.js';
 import Notification from './components/Notification';
 import noteService  from './services/notes';
+import Footer from './components/Footer.js';
 
 const App = () => {
   // create state for App component
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
-  const [showAll, setShowAll] = useState(true);
+ // const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState('some error happened...')
 
 // useEffect to load all notes when newNote is updated
@@ -78,7 +79,7 @@ const App = () => {
           ))
         }
       </ul>
-     
+      <Footer />
     </div>    
   )
 }
