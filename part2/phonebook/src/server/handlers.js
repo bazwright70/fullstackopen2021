@@ -9,11 +9,13 @@ const getAllContacts = () => {
 
 // create a new contact and return contact
 const createContact = (newContact) => {
+  console.log("In create contact Handler:", newContact)
   const response = axios.post(serverUrl, newContact);
   return response.then( response => response.data);
 }
 
 const removeContact = (contact) => {
+  console.log("In delete handler: ", contact)
   const response = axios.delete(`${serverUrl}/${contact.id}`)
   return response.then( response => response.data)
 }

@@ -5,10 +5,11 @@ const Display = ({ person, filterValue, removeContact }) => {
     <div>
      {
       person.filter((obj) => {
+      //  console.log("Display Component - filter",obj)
           return obj.name.toLowerCase().includes(filterValue.toLowerCase());
           })
             .map((obj) => ( 
-              <p key={obj.id} >{obj.name} {obj.number}
+              <p key={obj.name} >{obj.name} {obj.number}
                 <button
                   onClick={()=> removeContact(obj)}
                 >Delete </button>
