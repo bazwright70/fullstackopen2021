@@ -1,8 +1,8 @@
 const { response, request } = require('express');
 const express = require('express');
 const app = express();
-let notes = require('./notes');
-const { generateId } = require('./helpers');
+let notes = require('./notes.js');
+const { generateId } = require('./helpers.js');
 
 // middleware
 app.use(express.json())
