@@ -54,7 +54,8 @@ const App = () => {
               setNewNumber('');
             })
             .catch(err => {
-              setDisplayMessage(`There was a problem updating the number for "${entry.name}"`)
+              console.log(err.status)
+              setDisplayMessage(`Information on "${entry.name}" has already been removed from the server.`)
               setTimeout(() => {
                 setNewName('');
                 setNewNumber('');
