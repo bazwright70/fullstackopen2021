@@ -33,10 +33,9 @@ app.post('/api/notes',(request, response)=>{
     date: new Date(),   
   };
 
-  notes = notes.concat(note)
-  console.log(notes);
+  notes = notes.concat(note);
   response.json(note);
-})
+}) // ** End of POST route
 
 // GET single note
 app.get('/api/notes/:id',(request, response)=>{
