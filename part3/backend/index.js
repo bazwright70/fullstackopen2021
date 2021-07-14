@@ -1,11 +1,13 @@
 const { response, request } = require('express');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 let notes = require('./notes.js');
 const { generateId } = require('./helpers.js');
 
 // middleware
 app.use(express.json())
+app.use(cors())
 
 // GET root route
 app.get('/',(request, response) => {
@@ -56,6 +58,7 @@ app.delete('/api/notes/:id',(request, response)=>{
   response.status(204).end();
 })
 
-const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})

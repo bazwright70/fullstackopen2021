@@ -9,12 +9,14 @@ const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
  // const [showAll, setShowAll] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('some error happened...')
+  const [errorMessage, setErrorMessage] = useState(null)
 
 // useEffect to load all notes when newNote is updated
  useEffect(() => {
     noteService.getAll()
-      .then(allNotes => setNotes(allNotes)
+      .then(allNotes => {
+        setNotes(allNotes)
+      }
       )
       .catch(err => console.log(err))
     },[newNote]);
