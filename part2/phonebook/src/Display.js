@@ -5,7 +5,7 @@ const Display = ({ person, filterValue, removeContact }) => {
     <div>
      {
       person.filter((obj) => {
-      console.log("Display Component - filter",obj)
+      // console.log("Display Component - filter",obj)
           return obj.name.toLowerCase().includes(filterValue.toLowerCase());
           })
             .map((obj) => ( 
