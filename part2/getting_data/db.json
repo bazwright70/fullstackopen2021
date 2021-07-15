@@ -29,6 +29,12 @@
       "content": "Better code",
       "date": "2021-07-06T18:32:25.293Z",
       "important": true
+    },
+    {
+      "id": 6,
+      "content": "testing notes",
+      "date": "2021-07-15T11:40:00.874Z",
+      "important": false
     }
   ]
 }
