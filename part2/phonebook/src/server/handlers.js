@@ -1,5 +1,5 @@
 import axios from 'axios';
-const serverUrl = 'http://localhost:3001/persons';
+const serverUrl = '/persons';
 
 // return all contacts as data
 const getAllContacts = () => {
