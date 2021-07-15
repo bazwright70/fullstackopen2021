@@ -56,11 +56,11 @@ const App = () => {
             .catch(err => {
               console.log(err.status)
               setDisplayMessage(`Information on "${entry.name}" has already been removed from the server.`)
+              setNewName('');
+              setNewNumber('');
               setTimeout(() => {
-                setNewName('');
-                setNewNumber('');
                 setDisplayMessage(null);
-              }, 5000);             
+              }, 3000);             
             });
             return entry;
         }

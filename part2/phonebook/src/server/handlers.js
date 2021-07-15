@@ -1,5 +1,5 @@
 import axios from 'axios';
-const serverUrl = '/persons';
+const serverUrl = '/api/contacts';
 
 // return all contacts as data
 const getAllContacts = () => {
@@ -11,6 +11,7 @@ const getAllContacts = () => {
 const createContact = (newContact) => {
   console.log("In create contact Handler:", newContact)
   const response = axios.post(serverUrl, newContact);
+  console.log("CreateContact response object: ",response)
   return response.then( response => response.data);
 }
 
