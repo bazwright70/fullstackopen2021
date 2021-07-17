@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 let notes = require('./notes.js');
 const { generateId } = require('./helpers.js');
+const Note = require('./model')
 
 // middleware
 app.use(express.json())
