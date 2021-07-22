@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 let notes = require('./notes.js');
-const { generateId } = require('./helpers.js');
+const { generateId, errorHandler } = require('./helpers.js');
 const { Note, connection } = require('./model.js');
 
 // middleware
@@ -17,18 +17,25 @@ app.get('/',(request, response) => {
 });
 
 // GET all notes
-app.get('/api/notes', (request, response)=>{
+app.get('/api/notes', (request, response, next)=>{
   Note.find({})
-  .then( notes => response.json(notes));
+  .then( notes => response.json(notes))
+  .catch( (err) => {
+    const error = new Error('Mongo error creating new note');
+    error.status(402)
+    next(error)
+  })
 });
 // CREATE new note
 app.post('/api/notes',(request, response)=>{
+  // check for note content
   const body = request.body;
   if(!body.content){
     return response.status(400).json({
       error: 'content missing'
     })
   }    
+
   const note = new Note({
     content: body.content,
     id: generateId(),
@@ -37,11 +44,17 @@ app.post('/api/notes',(request, response)=>{
   });
 
   note.save()
-    .then(note => {
-      console.log('Created Note', note);
-      response.json(note)
+    .then(savedNote => {
+      console.log('*** LOG: Created Note', note, '***');
+      return savedNote.toJSON()
     })
-    .catch(err => console.log('Save error', err))
+    .then(formattedNote => {
+      return response.json(formattedNote)
+    })
+    .catch(error => {
+      console.log('*** LOG: Save error', error);
+      return next(error);
+    })
 
   notes = notes.concat(note);
   response.json(note);
@@ -54,7 +67,9 @@ app.get('/api/notes/:id',(request, response)=>{
       console.log("Found by ID: ", foundNote);
       response.json(foundNote)
     })
-    .catch( err => console.log('Error finding by id', err))
+    .catch( error => {
+      console.log('Error finding by id', err);
+      return next(error)})
 });
 
 // DELETE single note
@@ -65,6 +80,14 @@ app.delete('/api/notes/:id',(request, response)=>{
   });
   response.status(204).end();
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).json({
+    error: 'unknown endpoint'
+  })
+}
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
