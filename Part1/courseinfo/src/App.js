@@ -20,7 +20,7 @@ const Total  = ({parts}) => {
   const total = parts.reduce( (acc, curr)=>{
     return acc + curr.exercises
   },0 )
-  
+
   return(
     <div>
       <h1>Number of exercises is {total}</h1>
@@ -39,27 +39,29 @@ const Content = ({parts}) => {
 }
 
 function App() {
-  const course = 'Half Stack application development'
-  const parts = [
-    {
-      name:  'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data' ,
-      exercises:7
-    },
-    {
-      name: 'State of a component' ,
-      exercises:14
-    }
-  ]
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name:  'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data' ,
+        exercises:7
+      },
+      {
+        name: 'State of a component' ,
+        exercises:14
+      }
+    ]
+  } 
 
   return (
     <div>
-      <Header courseName={course}/>
-      <Content parts={parts}/>
-      <Total parts={parts}/>
+      <Header courseName={course.name}/>
+      <Content parts={course.parts}/>
+      <Total parts={course.parts}/>
     </div>
   );
 }
