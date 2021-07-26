@@ -1,20 +1,20 @@
-const Hello = (props) => {
-  return (
-    <div>
-      <p>Hello {props.name}, you are {props.age} years old</p>
-    </div>
-  )
- }
+import React, { useState } from 'react';
 
-function App() {
-  const name = 'Peter';
-  const age= 10;
+const App = () =>  {
+  const [counter, setCounter ] = useState(0);
+
+  const handleClick = () =>{
+    console.log('Clicked..')
+    setCounter(counter + 1)
+  }
+
+  console.log('Rendering ...')
     return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name= {name} age={age}/>
-      <Hello name='Daniel' age='14'/>
+        {counter}
+        <button onClick = {handleClick}>Click Me</button>
     </div>
+    
   );
 }
 
