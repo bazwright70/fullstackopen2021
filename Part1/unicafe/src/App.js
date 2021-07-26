@@ -30,6 +30,17 @@ function App() {
                   break;
     }
   }
+
+  const getAll = () => {
+    return good + bad + neutral
+  }
+  const getAverage = () => {
+    return (good - bad) / (good+bad+neutral) || 0;
+  }
+  const getPositive = () => {
+    return ((good)/(good+bad+neutral) || 0)+'%';
+  }
+
     return (
     <div >
       <h2>Give Your Feedback</h2>
@@ -40,6 +51,9 @@ function App() {
         <Stat label='Good' val={good}/>
         <Stat label='Neutral' val={neutral}/>
         <Stat label='Bad' val={bad}/>
+        <Stat label='Total' val={getAll()}/>
+        <Stat label='Average' val={getAverage()}/>
+        <Stat label='Positive' val={getPositive() }/>
     </div>
   );
 }
