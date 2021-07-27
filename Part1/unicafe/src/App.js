@@ -9,7 +9,9 @@ const Button = ({label, handler}) => {
 // indiv stat component
 const Stat = ({label, val}) => {
   return (
-    <p>{label} {val}</p>
+    <tr>
+      <td>{label}</td> <td>{val}</td>
+    </tr>
   )
 }
 
@@ -35,10 +37,10 @@ function App() {
     return good + bad + neutral
   }
   const getAverage = () => {
-    return (good - bad) / (good+bad+neutral) || 0;
+    return ((good - bad) / (good+bad+neutral)).toFixed(1);
   }
   const getPositive = () => {
-    return ((good)/(good+bad+neutral) || 0)+'%';
+    return ((good)/(good+bad+neutral)*100).toFixed(1)+'%';
   }
 
     return (
@@ -49,15 +51,15 @@ function App() {
         <Button handler={()=>handleClick('bad')} label=' Bad' />
       <h2>Statistics</h2>
       {
-        getAll() &&  
-        <div>
+        getAll() > 0 &&  
+        <table> 
           <Stat label='Good' val={good}/>
           <Stat label='Neutral' val={neutral}/>
           <Stat label='Bad' val={bad}/>
           <Stat label='Total' val={getAll()}/>
           <Stat label='Average' val={getAverage()}/>
           <Stat label='Positive' val={getPositive() }/>
-        </div>
+        </table>
       }
        
     </div>
