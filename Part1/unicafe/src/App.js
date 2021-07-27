@@ -10,7 +10,7 @@ const Button = ({label, handler}) => {
 const Stat = ({label, val}) => {
   return (
     <tr>
-      <td>{label}</td> <td>{val}</td>
+      <td>{label}</td><td>{val}</td>
     </tr>
   )
 }
@@ -30,6 +30,7 @@ function App() {
                   break;
       case 'bad': setBad(bad +1);
                   break;
+          default: break;
     }
   }
 
@@ -53,12 +54,14 @@ function App() {
       {
         getAll() > 0 &&  
         <table> 
-          <Stat label='Good' val={good}/>
-          <Stat label='Neutral' val={neutral}/>
-          <Stat label='Bad' val={bad}/>
-          <Stat label='Total' val={getAll()}/>
-          <Stat label='Average' val={getAverage()}/>
-          <Stat label='Positive' val={getPositive() }/>
+          <tbody>
+            <Stat label='Good' val={good}/>
+            <Stat label='Neutral' val={neutral}/>
+            <Stat label='Bad' val={bad}/>
+            <Stat label='Total' val={getAll()}/>
+            <Stat label='Average' val={getAverage()}/>
+            <Stat label='Positive' val={getPositive() }/>
+            </tbody>
         </table>
       }
        
