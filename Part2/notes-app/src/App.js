@@ -1,9 +1,16 @@
 import React, {useState} from 'react';
+import Note from './components/Note.js'
 
-function App() {
+
+const App = ({ notes }) =>  {
   return (
     <div >
-      Hello world
+      <h1>Notes</h1>
+      <ul>
+        {notes.map( note => 
+          <Note key={note.id} note={note} />
+        )}
+      </ul>
     </div>
   );
 }
