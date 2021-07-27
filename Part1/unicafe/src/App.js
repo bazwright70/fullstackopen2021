@@ -40,7 +40,18 @@ function App() {
   const getPositive = () => {
     return ((good)/(good+bad+neutral) || 0)+'%';
   }
-
+  if(getAll() === 0){
+    return(
+    <div >
+      <h2>Give Your Feedback</h2>
+        <Button handler={()=>handleClick('good')} label=' Good' />
+        <Button handler={()=>handleClick('neutral')} label=' Neutral' />
+        <Button handler={()=>handleClick('bad')} label=' Bad' />
+      <h2>Statistics</h2>
+      <p> No Feedback Given</p>
+    </div>
+    )
+  }else{
     return (
     <div >
       <h2>Give Your Feedback</h2>
@@ -48,6 +59,7 @@ function App() {
         <Button handler={()=>handleClick('neutral')} label=' Neutral' />
         <Button handler={()=>handleClick('bad')} label=' Bad' />
       <h2>Statistics</h2>
+      
         <Stat label='Good' val={good}/>
         <Stat label='Neutral' val={neutral}/>
         <Stat label='Bad' val={bad}/>
@@ -55,7 +67,7 @@ function App() {
         <Stat label='Average' val={getAverage()}/>
         <Stat label='Positive' val={getPositive() }/>
     </div>
-  );
+  )}
 }
 
 export default App;
