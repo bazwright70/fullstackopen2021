@@ -33,9 +33,12 @@ const Content = ({ course }) => {
   )
 }
 
-const Course = (props) => {
+const Course = ({course}) => {
   return(
-    <div>Course Component</div>
+    <div>
+      <Header course={course}/>
+      <Content course={course}/>
+    </div>
   )
 }
 
