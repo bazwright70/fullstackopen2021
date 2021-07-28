@@ -9,10 +9,16 @@ const App = () => {
 
   const handleForm = (event) => {
     event.preventDefault();
-    const personObj = {
-      name: newName
+    
+    if(persons.some(person => person.name.toLowerCase() === newName.toLowerCase()))
+      {
+      alert('${newName} is already in the phonebook');
+      }else{
+        const personObj = {
+          name: newName
+        }
+      setPersons(persons.concat(personObj));     
     }
-    setPersons(persons.concat(personObj))
     setNewName('');
   }
 
