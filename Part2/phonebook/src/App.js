@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 
 const App = () => {
-
+  // App state
   const [filter, setFilter] = useState('');
   const [newName,setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
@@ -13,8 +13,10 @@ const App = () => {
   ])
   const [filterPersons, setFilterPersons] = useState(persons)
 
+  // FORM submit handler
   const handleForm = (event) => {
     event.preventDefault();
+    // check if name already in phonebook
     const isDupe = persons.some(person => {
       return person.name.toLowerCase() === newName.toLowerCase()
     })
@@ -31,6 +33,7 @@ const App = () => {
     setNewNumber('');
   }
 
+  // FILTER display change handler
   const filterInput = (event) => {
     const filterVal = event.target.value;
     setFilter(filterVal);
@@ -44,6 +47,8 @@ const App = () => {
     setFilterPersons(filteredEntries)
   }
   
+
+  // APP Component
   return (
     <div>
       <div>debug: {newName}</div>
