@@ -34,7 +34,6 @@ const App = () => {
           name: newName,
           number: newNumber
         }
-      setFilterPersons(persons.concat(personObj));
       setPersons(persons.concat(personObj)); 
     }
     setFilter('');
