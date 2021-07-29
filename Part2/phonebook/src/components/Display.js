@@ -1,10 +1,9 @@
-import React  from ("react");
+import React  from "react";
 
-const Display = (props) => {
-
+const Display = ({filteredPersons}) => { 
   return(
     <ul>
-      {filterPersons.map(person => {
+      {filteredPersons.map(person => {
         return <li key={person.name}>{person.name} {person.number}</li>
       })}
       </ul>

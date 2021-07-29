@@ -1,23 +1,23 @@
-import React  from ("react");
+import React  from "react";
 
 const Form = (props) => {
-  
+const {handler, name, number, setName,setNumber} = props;
   return(
-    <form onSubmit={handleForm}>
+    <form onSubmit={handler}>
         <div>
           Name: <input 
             type="text"
             placeholder="Add new name..."
-            value={newName}
-            onChange={(e)=>{setNewName(e.target.value)}}
+            value={name}
+            onChange={(e)=>{setName(e.target.value)}}
           />
         </div>
         <div>
           Number:<input 
             type="text"
             placeholder="Add new number..."
-            value={newNumber}
-            onChange={(e)=>{setNewNumber(e.target.value)}}
+            value={number}
+            onChange={(e)=>{setNumber(e.target.value)}}
           />
         </div>
        

@@ -1,6 +1,6 @@
-import React  from ("react");
+import React  from "react";
 
-const Filter  = (props) => {
+const Filter  = ({handler, filter}) => {
   
   return(
     <div>
@@ -8,7 +8,7 @@ const Filter  = (props) => {
           type="text"
           value={filter}
           placeholder="filter phonebook..."
-          onChange={filterInput}
+          onChange={handler}
         />
       </div>
   )

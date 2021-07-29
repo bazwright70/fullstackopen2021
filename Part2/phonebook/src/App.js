@@ -31,10 +31,18 @@ const App = () => {
           name: newName,
           number: newNumber
         }
-      setPersons(persons.concat(personObj));     
+      setFilterPersons(persons.concat(personObj));
+      setPersons(persons.concat(personObj)); 
     }
+    setFilter('');
     setNewName('');
-    setNewNumber('');
+    setNewNumber('');  
+  }
+
+  const filterPhonebook = (filterOn) => {
+    return persons.filter(person =>{
+      return person.name.toLowerCase().includes(filterOn.toLowerCase());
+    });
   }
 
   // FILTER display change handler
@@ -42,26 +50,24 @@ const App = () => {
     const filterVal = event.target.value;
     setFilter(filterVal);
     
-    let filteredEntries = persons.filter(person =>{
-      console.log("Filter", filterVal)
-      console.log("Name: ", person.name)
-      return person.name.toLowerCase().includes(filterVal.toLowerCase());
-    })
-    console.log(filteredEntries)
-    setFilterPersons(filteredEntries)
+    const filteredEntries = filterPhonebook(filterVal)
+    setFilterPersons(filteredEntries);
   }
   
-
   // APP Component
   return (
     <div>
-      <div>debug: {newName}</div> // debug only
+      <div>debug: {newName}</div> 
       <h2>Phonebook</h2>
-      <Filter />
+      <Filter handler={filterInput} filter={filter}/>
       <h2>Add New Entry</h2>
-      <Form />
+      <Form handler={handleForm}
+            name={newName}
+            number={newNumber}
+            setName={setNewName}
+            setNumber={setNewNumber}/>
       <h2>Numbers</h2>
-      <Display />
+      <Display filteredPersons={filterPersons} />
     </div>
   )
 }
