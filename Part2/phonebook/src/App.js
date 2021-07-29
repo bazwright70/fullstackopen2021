@@ -39,19 +39,10 @@ const App = () => {
     setNewNumber('');  
   }
 
-  const filterPhonebook = (filterOn) => {
-    return persons.filter(person =>{
-      return person.name.toLowerCase().includes(filterOn.toLowerCase());
-    });
-  }
-
-  // FILTER display change handler
+  // Handler for filter input to update filter value
   const filterInput = (event) => {
     const filterVal = event.target.value;
     setFilter(filterVal);
-    
-    const filteredEntries = filterPhonebook(filterVal)
-    setFilterPersons(filteredEntries);
   }
   
   // APP Component
@@ -67,7 +58,7 @@ const App = () => {
             setName={setNewName}
             setNumber={setNewNumber}/>
       <h2>Numbers</h2>
-      <Display filteredPersons={filterPersons} />
+      <Display persons={persons} personFilter={filter} />
     </div>
   )
 }

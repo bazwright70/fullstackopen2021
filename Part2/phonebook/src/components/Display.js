@@ -1,9 +1,14 @@
 import React  from "react";
 
-const Display = ({filteredPersons}) => { 
+const Display = ({persons, personFilter}) => { 
+
+  const filterdPersons = persons.filter(person =>{
+    return person.name.toLowerCase().includes(personFilter.toLowerCase());
+  });
+
   return(
     <ul>
-      {filteredPersons.map(person => {
+      {filterdPersons.map(person => {
         return <li key={person.name}>{person.name} {person.number}</li>
       })}
       </ul>
