@@ -1,4 +1,7 @@
 import React,{useState} from 'react';
+import Display from './components/Display';
+import Filter from './components/Filter';
+import Form from './components/Form';
 
 const App = () => {
   // App state
@@ -13,7 +16,8 @@ const App = () => {
   ])
   const [filterPersons, setFilterPersons] = useState(persons)
 
-  // FORM submit handler
+  // FUNCTIONS
+  // FORM submit handler 
   const handleForm = (event) => {
     event.preventDefault();
     // check if name already in phonebook
@@ -51,41 +55,13 @@ const App = () => {
   // APP Component
   return (
     <div>
-      <div>debug: {newName}</div>
+      <div>debug: {newName}</div> // debug only
       <h2>Phonebook</h2>
-      Filter display with <input 
-        type="text"
-        value={filter}
-        placeholder="filter phonebook..."
-        onChange={filterInput}
-      />
+      <Filter />
       <h2>Add New Entry</h2>
-      <form onSubmit={handleForm}>
-        <div>
-          Name: <input 
-            type="text"
-            placeholder="Add new name..."
-            value={newName}
-            onChange={(e)=>{setNewName(e.target.value)}}
-          />
-        </div>
-        <div>
-          Number:<input 
-            type="text"
-            placeholder="Add new number..."
-            value={newNumber}
-            onChange={(e)=>{setNewNumber(e.target.value)}}
-          />
-        </div>
-       
-        <button type="submit">Add</button>
-      </form>
+      <Form />
       <h2>Numbers</h2>
-      <ul>
-      {filterPersons.map(person => {
-        return <li key={person.name}>{person.name} {person.number}</li>
-      })}
-      </ul>
+      <Display />
     </div>
   )
 }
