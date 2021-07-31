@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Note from './components/Note.js';
 import axios from 'axios';
+import getAll from './services/notes'
+console.log(getAll)
 
 
 const App = () =>  {
