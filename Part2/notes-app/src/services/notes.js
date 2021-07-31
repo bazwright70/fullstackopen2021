@@ -2,28 +2,22 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:3001/notes/';
 
 const getAll = () => {
-  axios 
-    .get(baseurl)
-    .then(response => {
-      allNotes = response.data;
-      return allNotes;
-    })  
+  return axios.get(baseUrl)
+    .then(response => response.data)     
 }
 
 const create = (note) => {
-  axios.post(baseUrl)
-    .then( response => {
-      const createdNote = response.data;
-      return createdNote
-    }) 
+ return  axios.post(baseUrl,note)
+  .then(response => response.data)   
 }
 
-const update = (id, noteObject) => {
-  axios.put(`${baseUrl}${note.id}`, note)
-    .then(response => {
-      const updatedNote = response.data;
-      return updatedNote;
-    })
+const update = (id,noteObject) => {
+  return axios.put(`${baseUrl}${id}`, noteObject)
+    .then(response => response.data)
 }
 
-export default getAll;
+export default {
+  getAll: getAll,
+  create: create,
+  update: update
+};

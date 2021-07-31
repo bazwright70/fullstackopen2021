@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Note from './components/Note.js';
 import axios from 'axios';
-import getAll from './services/notes'
-console.log(getAll)
-
+import noteService from './services/notes'
 
 const App = () =>  {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
 
+// load db data in useEffect on intial render
 useEffect(()=> {
-  console.log('Effect')
-  axios
-    .get('http://localhost:3001/notes')
-    .then(response => {
-      console.log('promise fulfilled')
-      setNotes(response.data);
+    noteService.getAll().then(data => {
+      setNotes(data)
     })
-    .catch(err => console.log(err))
 },[])
-console.log('Render', notes.length, 'notes')
 
+// add note button hadler
 const addNote = (event) => {
   event.preventDefault();
   const noteObject = {
@@ -30,12 +24,28 @@ const addNote = (event) => {
     content: newNote,
     important: Math.random() > 0.499999
   }
-  setNotes(notes.concat(noteObject));
-  setNewNote('');
+  noteService.create(noteObject)
+    .then(data => {
+      setNewNote('');
+      setNotes(notes.concat(data));  
+    }) 
 }
 
 const handleNoteChange = (event)=>{
+
   setNewNote(event.target.value)
+}
+// Note importance button handler
+const toggleImportanceOf =(id) => {
+  const foundNote = notes.find(el => el.id === id);
+  const newNote = {...foundNote, important: !foundNote.important};
+ 
+  noteService.update(id,newNote)
+    .then(data =>{
+      setNotes(notes.map((note)=>{
+        return note.id !== id ? note : data
+      }))
+    }) 
 }
 
 const notesToShow = showAll 
@@ -50,7 +60,9 @@ const notesToShow = showAll
       </button>
       <ul>
         {notesToShow.map( note => 
-          <Note key={note.id} note={note} />
+          <Note key={note.id} 
+            note={note} 
+            toggleImportance={toggleImportanceOf}/>
         )}
       </ul>
       <form onSubmit={addNote}>
