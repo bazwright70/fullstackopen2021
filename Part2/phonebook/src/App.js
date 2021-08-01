@@ -50,6 +50,16 @@ const App = () => {
     const filterVal = event.target.value;
     setFilter(filterVal);
   }
+
+  // Delete button handler
+  const handleDelete = (person) => {
+    console.log(`Deleting ${person.name}`)
+    handler.deletePerson(person.id)
+      .then(response => setPersons(
+        persons.filter( el => el.name !== person.name)
+      ))
+      .catch(error => console.log(error))
+  }
   
   // APP Component
   return (
@@ -64,7 +74,7 @@ const App = () => {
             setName={setNewName}
             setNumber={setNewNumber}/>
       <h2>Numbers</h2>
-      <Display persons={persons} personFilter={filter} />
+      <Display deleteHandler={handleDelete} persons={persons} personFilter={filter} />
     </div>
   )
 }

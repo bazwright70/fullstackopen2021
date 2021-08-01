@@ -13,10 +13,15 @@ const addPerson = (person) => {
     .then(response => response)
 }
 
+const deletePerson = (id) => {
+  return axios.delete(`${url}${id}`)
+    .then(response => response)
+}
 
 export default {
   getPersons,
-  addPerson
+  addPerson,
+  deletePerson
 }
 
 

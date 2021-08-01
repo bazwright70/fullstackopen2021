@@ -1,6 +1,8 @@
 import React  from "react";
+import DeleteButton from './DeleteButton.js';
+import handlers from './../services/handlers.js'
 
-const Display = ({persons, personFilter}) => { 
+const Display = ({persons, personFilter, deleteHandler}) => { 
 
   const filterdPersons = persons.filter(person =>{
     return person.name.toLowerCase().includes(personFilter.toLowerCase());
@@ -9,7 +11,9 @@ const Display = ({persons, personFilter}) => {
   return(
     <ul>
       {filterdPersons.map(person => {
-        return <li key={person.name}>{person.name} {person.number}</li>
+        return <li key={person.name}>{person.name} {person.number} 
+        <DeleteButton handler={() => deleteHandler(person)}/>
+        </li>
       })}
       </ul>
   )
