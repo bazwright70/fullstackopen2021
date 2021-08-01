@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Note from './components/Note.js';
-import axios from 'axios';
 import noteService from './services/notes'
 
 const App = () =>  {
@@ -10,8 +9,8 @@ const App = () =>  {
 
 // load db data in useEffect on intial render
 useEffect(()=> {
-    noteService.getAll().then(data => {
-      setNotes(data)
+    noteService.getAll().then(initialNotes => {
+      setNotes(initialNotes)
     })
 },[])
 
@@ -31,21 +30,28 @@ const addNote = (event) => {
     }) 
 }
 
-const handleNoteChange = (event)=>{
-
-  setNewNote(event.target.value)
-}
 // Note importance button handler
 const toggleImportanceOf =(id) => {
   const foundNote = notes.find(el => el.id === id);
   const newNote = {...foundNote, important: !foundNote.important};
  
-  noteService.update(id,newNote)
+  noteService
+    .update(id,newNote)
     .then(data =>{
       setNotes(notes.map((note)=>{
         return note.id !== id ? note : data
       }))
     }) 
+    .catch(error => {
+      alert(
+        `The note "${foundNote.content}" has already been deleted from the server`
+      )
+      setNotes(notes.filter(note => note.id !== id))
+    })   
+}
+// Note input field change handler
+const handleNoteChange = (event)=>{
+  setNewNote(event.taget.value)
 }
 
 const notesToShow = showAll 
