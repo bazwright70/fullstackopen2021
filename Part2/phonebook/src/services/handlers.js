@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = 'http://localhost:3001/persons'
+const url = 'http://localhost:3001/persons/'
 
 const getPersons = (props) => {
   return axios
@@ -12,6 +12,7 @@ const addPerson = (person) => {
     .post(url, person)
     .then(response => response)
 }
+
 
 export default {
   getPersons,
