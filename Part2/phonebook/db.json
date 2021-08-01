@@ -19,6 +19,16 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
+    },
+    {
+      "name": "Baz Wright",
+      "number": "987654321",
+      "id": 7
+    },
+    {
+      "name": "Daniel Wright",
+      "number": "4659165431",
+      "id": 8
     }
   ]
 }

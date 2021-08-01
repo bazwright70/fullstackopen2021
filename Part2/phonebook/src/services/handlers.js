@@ -18,10 +18,16 @@ const deletePerson = (id) => {
     .then(response => response)
 }
 
-export default {
+const updatePerson = (person) => {
+  return axios.put(`${url}${person.id}`, person)
+    .then(response => response)
+}
+const handlers = {
   getPersons,
   addPerson,
-  deletePerson
+  deletePerson,
+  updatePerson
 }
+export default handlers;
 
 

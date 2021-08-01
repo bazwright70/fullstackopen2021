@@ -2,7 +2,6 @@ import React,{useEffect, useState} from 'react';
 import Display from './components/Display';
 import Filter from './components/Filter';
 import Form from './components/Form';
-import axios from 'axios';
 import handler from './services/handlers.js'
 
 const App = () => {
@@ -27,8 +26,29 @@ const App = () => {
       return person.name.toLowerCase() === newName.toLowerCase()
     })
     if(isDupe){
-        alert(`${newName} is already in the phonebook`);
-      }else{
+        //  check if user wants to be uodated
+        const checkAdd = window.confirm(`${newName} is already in the phonebook, replace older number with the new one?`);
+        if(!checkAdd){
+          return -1;
+        }else{
+          // find current contact and create person object
+          const person = persons.find(el =>{
+            return el.name.toLowerCase() === newName.toLowerCase()
+          })
+          // update number of person object with new number
+          person.number = newNumber
+          handler.updatePerson(person)
+            .then(response => {
+              // update contacts state
+              setPersons(persons.map(el =>{
+                return el.id === person.id ? response.data : el
+              }))
+            })
+            setNewName('');
+            setNewNumber('')
+            return person;
+        }
+      }
         const personObj = {
           name: newName,
           number: newNumber
@@ -37,9 +57,7 @@ const App = () => {
         .then(response => {
           setPersons(persons.concat(personObj)); 
         })
-        .catch(error => console.log(error))
-        ;
-    }
+        .catch(error => console.log(error));
     setFilter('');
     setNewName('');
     setNewNumber('');  
