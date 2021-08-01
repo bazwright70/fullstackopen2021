@@ -10,7 +10,7 @@ const Display = ({persons, personFilter, deleteHandler}) => {
   return(
     <ul>
       {filterdPersons.map(person => {
-        return <li key={person.name}>{person.name} {person.number} 
+        return <li key={person.id}>{person.name} {person.number} 
         <DeleteButton handler={() => deleteHandler(person)}/>
         </li>
       })}

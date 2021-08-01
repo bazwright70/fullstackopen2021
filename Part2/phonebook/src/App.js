@@ -41,7 +41,7 @@ const App = () => {
             .then(response => {
               // update contacts state
               setPersons(persons.map(el =>{
-                return el.id === person.id ? response.data : el
+                return el.id !== person.id ? el : response.data 
               }))
             })
             setNewName('');
