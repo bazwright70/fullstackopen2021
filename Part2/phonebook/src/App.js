@@ -3,6 +3,7 @@ import Display from './components/Display';
 import Filter from './components/Filter';
 import Form from './components/Form';
 import axios from 'axios';
+import handler from './services/handlers.js'
 
 const App = () => {
   // App state
@@ -12,10 +13,8 @@ const App = () => {
   const [persons, setPersons] = useState([]);
  
   useEffect(() => {
-    axios.get('http://localhost:3001/persons')
-      .then(res => {
-        setPersons(res.data)
-      })
+    handler.getPersons()
+      .then(response => setPersons(response.data))
       .catch(err => console.log("**LOG: Error: ", err))
   },[])
 
@@ -34,7 +33,12 @@ const App = () => {
           name: newName,
           number: newNumber
         }
-      setPersons(persons.concat(personObj)); 
+      handler.addPerson(personObj)
+        .then(response => {
+          setPersons(persons.concat(personObj)); 
+        })
+        .catch(error => console.log(error))
+        ;
     }
     setFilter('');
     setNewName('');
