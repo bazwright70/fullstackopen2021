@@ -53,7 +53,10 @@ const App = () => {
 
   // Delete button handler
   const handleDelete = (person) => {
-    console.log(`Deleting ${person.name}`)
+    const checkDelete = window.confirm(`Delete ${person.name}?`);
+    if(!checkDelete){
+      return -1;
+    }
     handler.deletePerson(person.id)
       .then(response => setPersons(
         persons.filter( el => el.name !== person.name)

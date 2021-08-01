@@ -1,6 +1,5 @@
 import React  from "react";
 import DeleteButton from './DeleteButton.js';
-import handlers from './../services/handlers.js'
 
 const Display = ({persons, personFilter, deleteHandler}) => { 
 
