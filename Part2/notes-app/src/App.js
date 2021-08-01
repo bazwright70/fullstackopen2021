@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Note from './components/Note.js';
-import noteService from './services/notes'
+import noteService from './services/notes';
+import Notification from './components/Notification'; 
+import './index.css'
 
 const App = () =>  {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null)
 
 // load db data in useEffect on intial render
 useEffect(()=> {
@@ -43,9 +46,12 @@ const toggleImportanceOf =(id) => {
       }))
     }) 
     .catch(error => {
-      alert(
+      setErrorMessage(
         `The note "${foundNote.content}" has already been deleted from the server`
       )
+      setTimeout(()=>{
+        setErrorMessage(null)
+      },5000)
       setNotes(notes.filter(note => note.id !== id))
     })   
 }
@@ -58,9 +64,16 @@ const notesToShow = showAll
   ? notes
   : notes.filter( note => note.important);
 
+const footerStyle={
+  color: 'green',
+    fontStyle: 'italic',
+    fontSize: 16
+}
+
   return (
     <div >
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       <button onClick={()=>{setShowAll(!showAll)}}>
         {showAll ? "Show Important" : "Show All"}
       </button>
@@ -80,6 +93,10 @@ const notesToShow = showAll
         />
         <button type="submit">Save</button>
       </form>
+      <div style={footerStyle}>
+        <br/>
+        <em>Note App, Department of Computer Science, University of Helsinki 2021</em>
+      </div>
     </div>
   );
 }
