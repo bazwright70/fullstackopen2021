@@ -15,6 +15,7 @@ const App = () => {
   const [message, setMessage] = useState();
   const [messageType, setMessageType] = useState('info')
  
+  // Initial contact data load
   useEffect(() => {
     handler.getPersons()
       .then(response => {
@@ -66,13 +67,13 @@ const App = () => {
           name: newName,
           number: newNumber
         }
+      // call handler to add new user
       handler.addPerson(personObj)
         .then(response => {
           setPersons(persons.concat(response.data)); 
           displayMessage(`Added ${personObj.name} to contacts list...`,'info')
         })
         .catch(error => {
-          console.log(error);
           displayMessage('Could not add new contatc...','error')
         });
     setFilter('');
@@ -109,7 +110,7 @@ const displayMessage = (msg,type) => {
       }
       )
       .catch(error => {
-        displayMessage('Contact could not be deleted from the server...','error')
+        displayMessage(`Information on ${person.name} has already been removed from the server`,'error')
         console.log(error)})
   }
   
