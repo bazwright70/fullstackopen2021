@@ -68,7 +68,7 @@ const App = () => {
         }
       handler.addPerson(personObj)
         .then(response => {
-          setPersons(persons.concat(personObj)); 
+          setPersons(persons.concat(response.data)); 
           displayMessage(`Added ${personObj.name} to contacts list...`,'info')
         })
         .catch(error => {
@@ -102,7 +102,7 @@ const displayMessage = (msg,type) => {
     if(!checkDelete){
       return -1;
     }
-    handler.deletePerson(person.id)
+    handler.deletePerson(person)
       .then(response => {
         setPersons(persons.filter( el => el.name !== person.name))
         //displayMessage(`Deleted ${person.name}`,'info');

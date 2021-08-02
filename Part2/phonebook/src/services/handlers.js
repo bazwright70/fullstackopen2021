@@ -13,8 +13,8 @@ const addPerson = (person) => {
     .then(response => response)
 }
 
-const deletePerson = (id) => {
-  return axios.delete(`${url}${id}`)
+const deletePerson = (person) => {
+  return axios.delete(`${url}${person.id}`)
     .then(response => response)
 }
 
