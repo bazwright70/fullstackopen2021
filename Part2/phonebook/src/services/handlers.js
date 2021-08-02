@@ -22,6 +22,7 @@ const updatePerson = (person) => {
   return axios.put(`${url}${person.id}`, person)
     .then(response => response)
 }
+
 const handlers = {
   getPersons,
   addPerson,

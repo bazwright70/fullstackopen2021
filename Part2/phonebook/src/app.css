@@ -1,0 +1,16 @@
+.error{
+  background: rgb(207, 209, 211);
+  color: red;
+  border: 3px solid red;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.info{
+  background: rgb(207, 209, 211);
+  color: green;
+  border: 3px solid green;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
