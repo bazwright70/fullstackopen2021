@@ -1,4 +1,4 @@
-const http = require('http');
+const cors = require('cors');
 const express = require('express');
 const { generateId } = require('./helpers');
 const app = express();
@@ -27,7 +27,7 @@ let notes = [
 
 // Middleware
 app.use(express.json())
-
+app.use(cors())
   // APP GET root route
 app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>')
